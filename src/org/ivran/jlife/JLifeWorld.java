@@ -51,7 +51,7 @@ public class JLifeWorld extends JComponent
 	
 	public void setGridWidth(int gridWidth)
 	{
-		if(gridWidth <= 0)
+		if (gridWidth <= 0)
 		{
 			throw new IllegalArgumentException("gridWidth must be above 0");
 		}
@@ -60,7 +60,7 @@ public class JLifeWorld extends JComponent
 	
 	public void setGridHeight(int gridHeight)
 	{
-		if(gridHeight <= 0)
+		if (gridHeight <= 0)
 		{
 			throw new IllegalArgumentException("gridHeight must be above 0");
 		}
@@ -84,7 +84,7 @@ public class JLifeWorld extends JComponent
 	
 	public void setCellSize(int cellSize)
 	{
-		if(cellSize <= 0)
+		if (cellSize <= 0)
 		{
 			throw new IllegalArgumentException("cellSize must be > 0");
 		}
@@ -110,14 +110,13 @@ public class JLifeWorld extends JComponent
 		g2d.fillRect(0, 0, getWidth(), getHeight());
 		g2d.setColor(Color.black);
 		
-		for(int x = 0; x < gridWidth; x++)
+		for (int x = 0; x < gridWidth; x++)
 		{
-			for(int y = 0; y < gridHeight; y++)
+			for (int y = 0; y < gridHeight; y++)
 			{
-				if(!isAlive(x, y))
-				{
+				if (!isAlive(x, y))
 					continue;
-				}
+				
 				g2d.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
 			}
 		}
@@ -127,9 +126,9 @@ public class JLifeWorld extends JComponent
 	
 	public void fillRandomly()
 	{
-		for(int x = 0; x < gridWidth; x++)
+		for (int x = 0; x < gridWidth; x++)
 		{
-			for(int y = 0; y < gridHeight; y++)
+			for (int y = 0; y < gridHeight; y++)
 			{
 				currentGeneration[x][y] = random.nextBoolean();
 			}
@@ -139,14 +138,14 @@ public class JLifeWorld extends JComponent
 	
 	public void tick()
 	{
-		for(int x = 0; x < gridWidth; x++)
+		for (int x = 0; x < gridWidth; x++)
 		{
-			for(int y = 0; y < gridHeight; y++)
+			for (int y = 0; y < gridHeight; y++)
 			{
 				tickCell(x, y);
 			}
 		}
-		shift();
+		nextGeneration();
 		repaint();
 	}
 	
@@ -154,16 +153,16 @@ public class JLifeWorld extends JComponent
 	{
 		int livingNeighbors = countLivingNeighbors(x, y);
 		
-		if(isAlive(x, y))
+		if (isAlive(x, y))
 		{
-			if(livingNeighbors < 2 || livingNeighbors > 3)
+			if (livingNeighbors < 2 || livingNeighbors > 3)
 			{
 				nextGeneration[x][y] = false;
 			}
 		}
 		else
 		{
-			if(livingNeighbors == 3)
+			if (livingNeighbors == 3)
 			{
 				nextGeneration[x][y] = true;
 			}
@@ -174,16 +173,14 @@ public class JLifeWorld extends JComponent
 	{
 		int livingNeighbors = 0;
 
-		for(int xx = x - 1; xx < x + 2; xx++)
+		for (int xx = x - 1; xx < x + 2; xx++)
 		{
-			for(int yy = y - 1; yy < y + 2; yy++)
+			for (int yy = y - 1; yy < y + 2; yy++)
 			{
-				if(xx == x && yy == y)
-				{
+				if (xx == x && yy == y)
 					continue;
-				}
 				
-				if(isAlive(xx, yy))
+				if (isAlive(xx, yy))
 				{
 					livingNeighbors++;
 				}
@@ -193,11 +190,11 @@ public class JLifeWorld extends JComponent
 		return livingNeighbors;
 	}
 	
-	private void shift()
+	private void nextGeneration()
 	{
-		for(int x = 0; x < gridWidth; x++)
+		for (int x = 0; x < gridWidth; x++)
 		{
-			for(int y = 0; y < gridHeight; y++)
+			for (int y = 0; y < gridHeight; y++)
 			{
 				currentGeneration[x][y] = nextGeneration[x][y];
 			}

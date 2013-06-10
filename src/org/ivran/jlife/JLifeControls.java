@@ -15,22 +15,22 @@ import javax.swing.event.ChangeListener;
 public class JLifeControls extends JPanel
 {
 	private static final long serialVersionUID = -1543360357936435971L;
-	
+
 	private ResourceBundle	bundle;
 	private JLife			lifeInstance;
-	
+
 	protected JLifeControls(JLife lifeInstance)
 	{
 		this.lifeInstance = lifeInstance;
 		bundle = ResourceBundle.getBundle("ControlsBundle");
-		
+
 		add(createStartStopButton());
 		add(createFillRandomlyButton());
 		add(createSpeedSlider());
-		
+
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 	}
-	
+
 	private JButton createStartStopButton()
 	{
 		final JButton startStopButton = new JButton();
@@ -40,7 +40,7 @@ public class JLifeControls extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent event)
 			{
-				if(lifeInstance.isRunning())
+				if (lifeInstance.isRunning())
 				{
 					lifeInstance.stop();
 					startStopButton.setText(bundle.getString("button.start"));
@@ -54,7 +54,7 @@ public class JLifeControls extends JPanel
 		});
 		return startStopButton;
 	}
-	
+
 	private JButton createFillRandomlyButton()
 	{
 		JButton fillRandomlyButton = new JButton();
@@ -69,14 +69,14 @@ public class JLifeControls extends JPanel
 		});
 		return fillRandomlyButton;
 	}
-	
+
 	private JSlider createSpeedSlider()
 	{
 		DefaultBoundedRangeModel model = new DefaultBoundedRangeModel();
 		model.setMinimum(1);
 		model.setMaximum(1000);
 		model.setValue(1000);
-		
+
 		final JSlider speedSlider = new JSlider();
 		speedSlider.setModel(model);
 		speedSlider.addChangeListener(new ChangeListener()
