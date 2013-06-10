@@ -19,10 +19,4 @@ public class JLifeApplet extends JApplet
 	{
 		add(life);
 	}
-	
-	@Override
-	public void stop()
-	{
-		
-	}
 }
