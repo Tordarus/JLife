@@ -12,81 +12,73 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class JLifeControls extends JPanel
-{
-	private static final long serialVersionUID = -1543360357936435971L;
+public class JLifeControls extends JPanel {
 
-	private ResourceBundle	bundle;
-	private JLife			lifeInstance;
+  private static final long serialVersionUID = -1543360357936435971L;
 
-	protected JLifeControls(JLife lifeInstance)
-	{
-		this.lifeInstance = lifeInstance;
-		bundle = ResourceBundle.getBundle("ControlsBundle");
+  private ResourceBundle bundle;
+  private JLife lifeInstance;
 
-		add(createStartStopButton());
-		add(createFillRandomlyButton());
-		add(createSpeedSlider());
+  protected JLifeControls(JLife lifeInstance) {
+    this.lifeInstance = lifeInstance;
+    bundle = ResourceBundle.getBundle("ControlsBundle");
 
-		setLayout(new FlowLayout(FlowLayout.LEFT));
-	}
+    add(createStartStopButton());
+    add(createFillRandomlyButton());
+    add(createSpeedSlider());
 
-	private JButton createStartStopButton()
-	{
-		final JButton startStopButton = new JButton();
-		startStopButton.setText(bundle.getString("button.start"));
-		startStopButton.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent event)
-			{
-				if (lifeInstance.isRunning())
-				{
-					lifeInstance.stop();
-					startStopButton.setText(bundle.getString("button.start"));
-				}
-				else
-				{
-					lifeInstance.start();
-					startStopButton.setText(bundle.getString("button.stop"));
-				}
-			}
-		});
-		return startStopButton;
-	}
+    setLayout(new FlowLayout(FlowLayout.LEFT));
+  }
 
-	private JButton createFillRandomlyButton()
-	{
-		JButton fillRandomlyButton = new JButton();
-		fillRandomlyButton.setText(bundle.getString("button.fill-random"));
-		fillRandomlyButton.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent event)
-			{
-				lifeInstance.fillWorldRandomly();
-			}
-		});
-		return fillRandomlyButton;
-	}
+  private JButton createStartStopButton() {
+    final JButton startStopButton = new JButton();
+    startStopButton.setText(bundle.getString("button.start"));
+    startStopButton.addActionListener(new ActionListener() {
 
-	private JSlider createSpeedSlider()
-	{
-		DefaultBoundedRangeModel model = new DefaultBoundedRangeModel();
-		model.setMinimum(1);
-		model.setMaximum(1000);
-		model.setValue(1000);
+      @Override
+      public void actionPerformed(ActionEvent event) {
+        if (lifeInstance.isRunning()) {
+          lifeInstance.stop();
+          startStopButton.setText(bundle.getString("button.start"));
+        }
+        else {
+          lifeInstance.start();
+          startStopButton.setText(bundle.getString("button.stop"));
+        }
+      }
+    });
+    return startStopButton;
+  }
 
-		final JSlider speedSlider = new JSlider();
-		speedSlider.setModel(model);
-		speedSlider.addChangeListener(new ChangeListener()
-		{
-			@Override
-			public void stateChanged(ChangeEvent event)
-			{
-				lifeInstance.setSpeed(speedSlider.getValue());
-			}
-		});
-		return speedSlider;
-	}
+  private JButton createFillRandomlyButton() {
+    JButton fillRandomlyButton = new JButton();
+    fillRandomlyButton.setText(bundle.getString("button.fill-random"));
+    fillRandomlyButton.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent event) {
+        lifeInstance.fillWorldRandomly();
+      }
+    });
+    return fillRandomlyButton;
+  }
+
+  private JSlider createSpeedSlider() {
+    DefaultBoundedRangeModel model = new DefaultBoundedRangeModel();
+    model.setMinimum(1);
+    model.setMaximum(1000);
+    model.setValue(1000);
+
+    final JSlider speedSlider = new JSlider();
+    speedSlider.setModel(model);
+    speedSlider.addChangeListener(new ChangeListener() {
+
+      @Override
+      public void stateChanged(ChangeEvent event) {
+        lifeInstance.setSpeed(speedSlider.getValue());
+      }
+    });
+    return speedSlider;
+  }
+
 }
