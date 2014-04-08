@@ -19,7 +19,7 @@ public class JLifeWorld extends JComponent {
   private int gridHeight;
   private int cellSize;
 
-  private Random random;
+  private final Random random;
 
   private JLifeWorld() {
     random = new Random();

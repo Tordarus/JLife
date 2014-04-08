@@ -16,8 +16,8 @@ public class JLifeControls extends JPanel {
 
   private static final long serialVersionUID = -1543360357936435971L;
 
-  private ResourceBundle bundle;
-  private JLifePanel lifeInstance;
+  private final ResourceBundle bundle;
+  private final JLifePanel lifeInstance;
 
   protected JLifeControls(JLifePanel lifeInstance) {
     this.lifeInstance = lifeInstance;
