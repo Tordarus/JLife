@@ -12,80 +12,24 @@ public class JLifeComponent extends JComponent {
 
   private static final long serialVersionUID = -8788608530317688013L;
 
-  private boolean[][] currentGeneration;
-  private boolean[][] nextGeneration;
-
-  private int gridWidth;
-  private int gridHeight;
+  private final JLifeWorld world;
+  private final Random random;
   private int cellSize;
 
-  private final Random random;
-
-  private JLifeComponent() {
+  public JLifeComponent(int worldWidth, int worldHeight, int cellSize) {
+    world = new JLifeWorld(worldWidth, worldHeight);
     random = new Random();
-  }
+    this.cellSize = cellSize;
 
-  protected JLifeComponent(int gridWidth, int gridHeight, int cellSize) {
-    this();
-
-    setGridWidth(gridWidth);
-    setGridHeight(gridHeight);
-    setCellSize(cellSize);
-
-    this.currentGeneration = new boolean[gridWidth][gridHeight];
-    this.nextGeneration = new boolean[gridWidth][gridHeight];
-
-    int width = gridWidth * cellSize;
-    int height = gridHeight * cellSize;
-
-    Dimension size = new Dimension(width, height);
+    Dimension size = new Dimension(worldWidth * cellSize, worldHeight * cellSize);
     setMinimumSize(size);
     setPreferredSize(size);
     setMaximumSize(size);
     setSize(size);
-
-    fillRandomly();
-  }
-
-  public void setGridWidth(int gridWidth) {
-    if (gridWidth <= 0) {
-      throw new IllegalArgumentException("gridWidth must be above 0");
-    }
-    this.gridWidth = gridWidth;
-  }
-
-  public void setGridHeight(int gridHeight) {
-    if (gridHeight <= 0) {
-      throw new IllegalArgumentException("gridHeight must be above 0");
-    }
-    this.gridHeight = gridHeight;
-  }
-
-  public int getGridWidth() {
-    return gridWidth;
-  }
-
-  public int getGridHeight() {
-    return gridHeight;
   }
 
   public int getCellSize() {
     return cellSize;
-  }
-
-  public void setCellSize(int cellSize) {
-    if (cellSize <= 0) {
-      throw new IllegalArgumentException("cellSize must be > 0");
-    }
-    this.cellSize = cellSize;
-  }
-
-  public boolean isInWorld(int x, int y) {
-    return (x > 0 && x < gridWidth) && (y > 0 && y < gridHeight);
-  }
-
-  public boolean isAlive(int x, int y) {
-    return isInWorld(x, y) && currentGeneration[x][y];
   }
 
   @Override
@@ -96,9 +40,9 @@ public class JLifeComponent extends JComponent {
     g2d.fillRect(0, 0, getWidth(), getHeight());
     g2d.setColor(Color.black);
 
-    for (int x = 0; x < gridWidth; x++) {
-      for (int y = 0; y < gridHeight; y++) {
-        if (!isAlive(x, y))
+    for (int x = 0; x < world.getWidth(); x++) {
+      for (int y = 0; y < world.getHeight(); y++) {
+        if (!world.isAlive(x, y))
           continue;
 
         g2d.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
@@ -109,62 +53,17 @@ public class JLifeComponent extends JComponent {
   }
 
   public void fillRandomly() {
-    for (int x = 0; x < gridWidth; x++) {
-      for (int y = 0; y < gridHeight; y++) {
-        currentGeneration[x][y] = random.nextBoolean();
+    for (int x = 0; x < world.getWidth(); x++) {
+      for (int y = 0; y < world.getHeight(); y++) {
+        world.setAlive(x, y, random.nextBoolean());
       }
     }
     repaint();
   }
 
   public void tick() {
-    for (int x = 0; x < gridWidth; x++) {
-      for (int y = 0; y < gridHeight; y++) {
-        tickCell(x, y);
-      }
-    }
-    nextGeneration();
+    world.update();
     repaint();
-  }
-
-  private void tickCell(int x, int y) {
-    int livingNeighbors = countLivingNeighbors(x, y);
-
-    if (isAlive(x, y)) {
-      if (livingNeighbors < 2 || livingNeighbors > 3) {
-        nextGeneration[x][y] = false;
-      }
-    }
-    else {
-      if (livingNeighbors == 3) {
-        nextGeneration[x][y] = true;
-      }
-    }
-  }
-
-  private int countLivingNeighbors(int x, int y) {
-    int livingNeighbors = 0;
-
-    for (int xx = x - 1; xx < x + 2; xx++) {
-      for (int yy = y - 1; yy < y + 2; yy++) {
-        if (xx == x && yy == y)
-          continue;
-
-        if (isAlive(xx, yy)) {
-          livingNeighbors++;
-        }
-      }
-    }
-
-    return livingNeighbors;
-  }
-
-  private void nextGeneration() {
-    for (int x = 0; x < gridWidth; x++) {
-      for (int y = 0; y < gridHeight; y++) {
-        currentGeneration[x][y] = nextGeneration[x][y];
-      }
-    }
   }
 
 }
