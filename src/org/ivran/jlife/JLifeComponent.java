@@ -42,8 +42,9 @@ public class JLifeComponent extends JComponent {
 
     for (int x = 0; x < world.getWidth(); x++) {
       for (int y = 0; y < world.getHeight(); y++) {
-        if (!world.isAlive(x, y))
+        if (!world.isAlive(x, y)) {
           continue;
+        }
 
         g2d.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
       }
