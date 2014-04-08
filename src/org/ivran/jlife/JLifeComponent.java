@@ -8,7 +8,7 @@ import java.util.Random;
 
 import javax.swing.JComponent;
 
-public class JLifeWorld extends JComponent {
+public class JLifeComponent extends JComponent {
 
   private static final long serialVersionUID = -8788608530317688013L;
 
@@ -21,11 +21,11 @@ public class JLifeWorld extends JComponent {
 
   private final Random random;
 
-  private JLifeWorld() {
+  private JLifeComponent() {
     random = new Random();
   }
 
-  protected JLifeWorld(int gridWidth, int gridHeight, int cellSize) {
+  protected JLifeComponent(int gridWidth, int gridHeight, int cellSize) {
     this();
 
     setGridWidth(gridWidth);
