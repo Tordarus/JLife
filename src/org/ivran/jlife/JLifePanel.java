@@ -7,14 +7,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class JLife extends JPanel implements ActionListener {
+public class JLifePanel extends JPanel implements ActionListener {
 
   private static final long serialVersionUID = 3180925303456102442L;
 
   private Timer timer;
   private JLifeWorld world;
 
-  public JLife() {
+  public JLifePanel() {
     setLayout(new BorderLayout());
 
     add(new JLifeControls(this), BorderLayout.SOUTH);

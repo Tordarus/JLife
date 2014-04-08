@@ -8,7 +8,7 @@ public class Main {
     JFrame frame = new JFrame("Game Of Life");
     frame.setResizable(false);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.add(new JLife());
+    frame.add(new JLifePanel());
     frame.pack();
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);
