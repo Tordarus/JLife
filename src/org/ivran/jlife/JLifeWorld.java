@@ -33,7 +33,12 @@ public class JLifeWorld {
   }
 
   public boolean isAlive(int x, int y) {
-    return currentGeneration[x][y];
+    if ((x >= 0 && x < width) && (y >= 0 && y < height)) {
+      return currentGeneration[x][y];
+    }
+    else {
+      return false;
+    }
   }
 
   public void setAlive(int x, int y, boolean alive) {
