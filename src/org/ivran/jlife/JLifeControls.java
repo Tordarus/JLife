@@ -17,10 +17,10 @@ public class JLifeControls extends JPanel {
   private static final long serialVersionUID = -1543360357936435971L;
 
   private final ResourceBundle bundle;
-  private final JLifePanel lifeInstance;
+  private final JLifePanel lifePanel;
 
-  protected JLifeControls(JLifePanel lifeInstance) {
-    this.lifeInstance = lifeInstance;
+  protected JLifeControls(JLifePanel lifePanel) {
+    this.lifePanel = lifePanel;
     bundle = ResourceBundle.getBundle("ControlsBundle");
 
     add(createStartStopButton());
@@ -37,12 +37,12 @@ public class JLifeControls extends JPanel {
 
       @Override
       public void actionPerformed(ActionEvent event) {
-        if (lifeInstance.isRunning()) {
-          lifeInstance.stop();
+        if (lifePanel.isRunning()) {
+          lifePanel.stop();
           startStopButton.setText(bundle.getString("button.start"));
         }
         else {
-          lifeInstance.start();
+          lifePanel.start();
           startStopButton.setText(bundle.getString("button.stop"));
         }
       }
@@ -57,7 +57,7 @@ public class JLifeControls extends JPanel {
 
       @Override
       public void actionPerformed(ActionEvent event) {
-        lifeInstance.fillWorldRandomly();
+        lifePanel.getWorld();
       }
     });
     return fillRandomlyButton;
@@ -75,7 +75,7 @@ public class JLifeControls extends JPanel {
 
       @Override
       public void stateChanged(ChangeEvent event) {
-        lifeInstance.setSpeed(speedSlider.getValue());
+        lifePanel.setSpeed(speedSlider.getValue());
       }
     });
     return speedSlider;

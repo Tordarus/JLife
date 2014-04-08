@@ -12,24 +12,30 @@ public class JLifePanel extends JPanel implements ActionListener {
   private static final long serialVersionUID = 3180925303456102442L;
 
   private final Timer timer;
-  private final JLifeComponent world;
+  private final JLifeWorld world;
+  private final JLifeView worldView;
 
   public JLifePanel() {
-    setLayout(new BorderLayout());
-
-    add(new JLifeControls(this), BorderLayout.SOUTH);
-    add(world = new JLifeComponent(200, 200, 2), BorderLayout.CENTER);
-
-    timer = new Timer(1000, this);
+    this(new JLifeWorld(200, 200));
   }
 
-  public void fillWorldRandomly() {
-    world.fillRandomly();
+  public JLifePanel(JLifeWorld world) {
+    timer = new Timer(1000, this);
+    this.world = world;
+    this.worldView = new JLifeView(world, 2);
+
+    setLayout(new BorderLayout());
+    add(new JLifeControls(this), BorderLayout.SOUTH);
+    add(worldView, BorderLayout.CENTER);
+  }
+
+  public JLifeWorld getWorld() {
+    return world;
   }
 
   @Override
   public void actionPerformed(ActionEvent event) {
-    world.tick();
+    world.update();
   }
 
   public void setSpeed(int speed) {
