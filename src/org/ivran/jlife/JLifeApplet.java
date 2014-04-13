@@ -6,10 +6,9 @@ public class JLifeApplet extends JApplet {
 
   private static final long serialVersionUID = -537165024247170613L;
 
-  private JLifePanel life;
+  private final JLifePanel life;
 
-  @Override
-  public void init() {
+  public JLifeApplet() {
     life = new JLifePanel();
   }
 
